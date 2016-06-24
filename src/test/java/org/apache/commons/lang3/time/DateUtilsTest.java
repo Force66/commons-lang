@@ -693,6 +693,18 @@ public class DateUtilsTest {
             // expected
         }
     }
+    
+  //-----------------------------------------------------------------------
+    @Test
+    public void testToXMLGregorianCalendar() {
+        assertEquals("Failed to convert to a XMLGregorianCalendar and back", date1, DateUtils.toXMLGregorianCalendar(date1).toGregorianCalendar().getTime());
+        try {
+            DateUtils.toXMLGregorianCalendar(null);
+            fail("Expected NullPointerException to be thrown");
+        } catch(final NullPointerException npe) {
+            // expected
+        }
+    }
 
     //-----------------------------------------------------------------------
     /**

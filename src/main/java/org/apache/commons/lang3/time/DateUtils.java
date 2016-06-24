@@ -20,11 +20,16 @@ import java.text.ParseException;
 import java.text.ParsePosition;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
  * <p>A suite of utilities surrounding the use of the
@@ -664,6 +669,26 @@ public class DateUtils {
         final Calendar c = Calendar.getInstance();
         c.setTime(date);
         return c;
+    }
+    
+  //-----------------------------------------------------------------------
+    /**
+     * Converts a {@code Date} into a {@code XMLGregorianCalendar}. 
+     * 
+     * @param date the date to convert to a XMLGregorianCalendar
+     * @return the created XMLGregorianCalendar
+     * @throws NullPointerException if null is passed in
+     * @throws IllegalStateException if DatatypeFactory implementation isn't configured
+     * @since 3.0
+     */
+    public static XMLGregorianCalendar toXMLGregorianCalendar(final Date date) {
+        final GregorianCalendar c = new GregorianCalendar();
+        c.setTime(date);
+        try {
+            return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
+        } catch (DatatypeConfigurationException e) {
+            throw new IllegalStateException(e);
+        }
     }
     
     //-----------------------------------------------------------------------
